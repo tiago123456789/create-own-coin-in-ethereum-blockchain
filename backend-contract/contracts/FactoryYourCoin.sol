@@ -20,6 +20,10 @@ contract FactoryYourCoin {
         coinsDeployed.push(address(newCoin));
     }
 
+    function getLastCoinDeployed() public view returns(address) {
+        return coinsDeployed[coinsDeployed.length - 1];
+    }
+
     function getCoinsDeployed() public view returns(address[] memory) {
         return coinsDeployed;
     }

@@ -1,0 +1,29 @@
+{
+  "name": "make-coin-easy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiago123456789/create-own-coin-in-ethereum-blockchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiago123456789/create-own-coin-in-ethereum-blockchain/issues"
+  },
+  "homepage": "https://github.com/tiago123456789/create-own-coin-in-ethereum-blockchain#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "knex": "^2.5.1",
+    "next": "^13.4.16",
+    "pg": "^8.11.3",
+    "yup": "^1.2.0"
+  }
+}

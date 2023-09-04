@@ -37,6 +37,24 @@ describe("FactoryYourCoin contract", () => {
         expect(coinsDeployed.length).to.equal(1)
     });
 
+    it("Should be return address last coin created when call getLastCoinDeployed method", async function () {
+        const { contract } = await deployContract()
+        await contract
+            .createCoin(
+                fakeData.name,
+                fakeData.symbol
+            )
+
+        const [coinsDeployed, lastCoinDeployed] = await Promise.all([
+            contract.getCoinsDeployed(),
+            contract.getLastCoinDeployed()
+        ])
+
+        expect(coinsDeployed.length).to.equal(1)
+        expect(coinsDeployed[0]).to.equal(lastCoinDeployed)
+    });
+
+
     it("Should be crate has 2 coins after call createCoin 2 times", async function () {
         const { contract } = await deployContract()
         await contract
