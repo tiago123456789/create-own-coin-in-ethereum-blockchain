@@ -3,24 +3,28 @@ import { Button, Form, Grid, Modal } from "semantic-ui-react"
 import { createCoin } from "../services/coins";
 
 
-function ModalCreateCoin({ open, close, actionAfterCreate }) {
+function ModalCreateCoin({ ownerOfCoin, open, close, actionAfterCreate }) {
     const [newCoin, setNewCoin] = useState({
         name: "",
         symbol: "",
-        totalAmount: ""
+        totalAmount: "",
+        owner: ownerOfCoin
     })
 
     const [isLoading, setIsLoading] = useState(false)
 
     const submitToCreateCoin = async () => {
         setIsLoading(true)
-        await createCoin(newCoin.name, newCoin.symbol);
-        setIsLoading(false)
+        await createCoin(
+            newCoin.name, newCoin.symbol, ownerOfCoin
+        );
         setNewCoin({
             name: "",
             symbol: "",
-            totalAmount: ""
+            totalAmount: "",
+            owner: ""
         })
+        setIsLoading(false)
         close();
         await actionAfterCreate();
     }

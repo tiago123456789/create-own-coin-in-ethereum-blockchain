@@ -14,12 +14,12 @@ export default function useAuth() {
     }
 
     const isConnected = async () => {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        return accounts.length > 0;
+        return accountConnected != null;
     }
 
     return {
         authenticateInWallet,
-        isConnected
+        isConnected,
+        accountConnected
     }
 }

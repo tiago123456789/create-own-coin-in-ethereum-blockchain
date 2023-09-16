@@ -1,16 +1,27 @@
 import { useState } from "react"
 import { Button, Input, Modal } from "semantic-ui-react"
+import { requestCoin } from "../services/coins";
 
-function ModalRequestCoin({ open, close, selectedCoin }) {
+function ModalRequestCoin({ accountConnected, open, close, selectedCoin }) {
     const [amount, setAmount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false)
 
-    const requestAmountOfCoin = () => {
-        console.log(selectedCoin)
-        console.log(amount)
+    const requestAmountOfCoin = async () => {
+        setIsLoading(false);
+        const request = {
+            amount, 
+            ownerWalletAddress: selectedCoin.owner,
+            requesterWalletAddress: accountConnected,
+            coinContractAddress: selectedCoin.address,
+            coinName: selectedCoin.name
+        }
+        await requestCoin(request);
+        closeThisModal();
     }
 
     const closeThisModal = () => {
         setAmount(0);
+        setIsLoading(false)
         close();
     }
 
@@ -36,7 +47,7 @@ function ModalRequestCoin({ open, close, selectedCoin }) {
                 <Button onClick={() => closeThisModal()}>
                     Cancel
                 </Button>
-                <Button color="blue" onClick={() => requestAmountOfCoin()}>
+                <Button loading={isLoading}  color="blue" onClick={() => requestAmountOfCoin()}>
                     Create
                 </Button>
             </Modal.Actions>

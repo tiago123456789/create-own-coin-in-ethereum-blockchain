@@ -9,7 +9,7 @@ import { createCoin, getCoins } from "../services/coins";
 import useAuth from "../hooks/useAuth";
 
 function Index({ coinsCreated }) {
-    const { authenticateInWallet, isConnected } = useAuth();
+    const { accountConnected, authenticateInWallet, isConnected } = useAuth();
     const [coins, setCoins] = useState(coinsCreated);
     const [showModalCreateCoin, setShowModalCreateCoin] = useState(false);
     const [showModalRequestCoin, setShowModalRequestCoin] = useState(false);
@@ -20,8 +20,8 @@ function Index({ coinsCreated }) {
         setCoins(newCoins)
     }
 
-    const loadCoins = async (offset, limit) => {
-        const newCoins = await getCoins(offset, limit)
+    const loadCoins = async (page, itemsPerPage) => {
+        const newCoins = await getCoins(page, itemsPerPage)
         setCoins([...coins, ...newCoins])
     }
 
@@ -38,7 +38,7 @@ function Index({ coinsCreated }) {
     useEffect(() => {
         (async () => {
             await authenticateInWallet()
-            loadCoins(3, 15)
+            loadCoins(2, 10)
         })()
     }, [])
 
@@ -46,11 +46,13 @@ function Index({ coinsCreated }) {
         <>
             <Header />
             <ModalRequestCoin
+                accountConnected={accountConnected}
                 selectedCoin={selectedCoin}
                 open={showModalRequestCoin}
                 close={() => closeModalRequestCoin()}
             />
             <ModalCreateCoin
+                ownerOfCoin={accountConnected}
                 open={showModalCreateCoin}
                 close={() => setShowModalCreateCoin(false)}
                 actionAfterCreate={() => first10Coins()}

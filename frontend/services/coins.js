@@ -395,11 +395,20 @@ export const getCoins = async (page, itemsPerPage) => {
     return response.data.data;
 }
 
-
-export const createCoin = async (name, symbol) => {
+export const createCoin = async (name, symbol, owner) => {
     const transaction = await factoryCoinContract.createCoin(name, symbol);
     await transaction.wait()
     const address = await factoryCoinContract.getLastCoinDeployed();
-    
+    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+    return axios.post(`${baseUrl}coins`, {
+        name,
+        symbol, 
+        address,
+        owner
+    })
 }
 
+export const requestCoin = (data) => {
+    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+    return axios.post(`${baseUrl}requests`, data)
+}
