@@ -412,3 +412,20 @@ export const requestCoin = (data) => {
     const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
     return axios.post(`${baseUrl}requests`, data)
 }
+
+export const getRequestedCoinsByOwner = async (owner) => {
+    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+    const response = await axios.get(`${baseUrl}requests?ownerWalletAddress=${owner}`)
+    return response.data;
+}
+
+export const approveRequestForCoin = async (contractAddress, recipient, amount, id) => {
+    const coinContract = new ethers.Contract(
+        contractAddress, COIN_ABI, getSigner()
+    )
+
+    const transaction = await coinContract.transfer(recipient, amount);
+    await transaction.wait()
+    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+    await axios.delete(`${baseUrl}requests/${id}`)
+}

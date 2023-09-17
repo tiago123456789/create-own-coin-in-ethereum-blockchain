@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import web3 from "../services/web3"
 
 export default function useAuth() {
     const [accountConnected, setAccountConnected] = useState(null)
 
+    useEffect(() => {
+        if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+            ethereum.on('accountsChanged', function (accounts) {
+                setAccountConnected(accounts[0]);
+            })
+        }
+    }, [])
+    
+      
     const authenticateInWallet = async () => {
         try {
             const accounts = await web3.send("eth_requestAccounts", [])

@@ -13,6 +13,7 @@ function Index({ coinsCreated }) {
     const [coins, setCoins] = useState(coinsCreated);
     const [showModalCreateCoin, setShowModalCreateCoin] = useState(false);
     const [showModalRequestCoin, setShowModalRequestCoin] = useState(false);
+    const [showModalRequestPendents, setShowModalRequestsPendents] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState(null)
 
     const first10Coins = async () => {
@@ -57,14 +58,21 @@ function Index({ coinsCreated }) {
                 close={() => setShowModalCreateCoin(false)}
                 actionAfterCreate={() => first10Coins()}
             />
-            {/* <ModalRequestsPendent /> */}
+            <ModalRequestsPendent 
+                ownerOfCoin={accountConnected}
+                open={showModalRequestPendents}
+                close={() => setShowModalRequestsPendents(false)}
+            />
             <Container>
                 {isConnected() &&
                     <Button color="blue" onClick={() => setShowModalCreateCoin(true)}>
                         <Icon name="plus" /> Create your coin
                     </Button>
                 }
-                <Button color="blue" className="right floated">
+                <Button 
+                    color="blue" 
+                    onClick={() => setShowModalRequestsPendents(true)}
+                    className="right floated">
                     <Icon name="list" /> Requests pendent
                 </Button>
                 <br />
