@@ -16,7 +16,7 @@ function ModalCreateCoin({ ownerOfCoin, open, close, actionAfterCreate }) {
     const submitToCreateCoin = async () => {
         setIsLoading(true)
         await createCoin(
-            newCoin.name, newCoin.symbol, ownerOfCoin
+            newCoin.name, newCoin.symbol, ownerOfCoin, newCoin.totalAmount
         );
         setNewCoin({
             name: "",

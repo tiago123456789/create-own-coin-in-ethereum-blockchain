@@ -8,7 +8,8 @@ function ModalRequestsPendent({
     close
 }) {
     const [requests, setRequests] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null)
 
     const loadRequestsPendents = async (owner) => {
         const data = await getRequestedCoinsByOwner(owner);
@@ -20,6 +21,7 @@ function ModalRequestsPendent({
     }
 
     const approve = async (item) => {
+        setSelectedItem(item)
         setIsLoading(true)
         await approveRequestForCoin(
             item.coin_contract_address, 
@@ -29,6 +31,7 @@ function ModalRequestsPendent({
         )
         loadRequestsPendents(ownerOfCoin)
         setIsLoading(false)
+        setSelectedItem(null)
     }
 
     useEffect(() => {
@@ -62,9 +65,10 @@ function ModalRequestsPendent({
                                     <Card.Content extra>
                                         {canApprove(item) &&
                                             <Button 
+                                            loading={(isLoading && selectedItem.id == item.id )}
                                             onClick={() => approve(item)}
                                             fluid basic color='blue'>
-                                                { isLoading ? "Processing..." : "Approve" }
+                                                Approve
                                             </Button>
                                         }
                                     </Card.Content>

@@ -33,6 +33,11 @@ const FACTORY_COIN_ABI = [
                 "internalType": "string",
                 "name": "symbol",
                 "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "totalCoin",
+                "type": "uint256"
             }
         ],
         "name": "createCoin",
@@ -80,6 +85,11 @@ const COIN_ABI = [
                 "internalType": "string",
                 "name": "symbol",
                 "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "totalCoin",
+                "type": "uint256"
             },
             {
                 "internalType": "address",
@@ -395,14 +405,14 @@ export const getCoins = async (page, itemsPerPage) => {
     return response.data.data;
 }
 
-export const createCoin = async (name, symbol, owner) => {
-    const transaction = await factoryCoinContract.createCoin(name, symbol);
+export const createCoin = async (name, symbol, owner, totalCoin) => {
+    const transaction = await factoryCoinContract.createCoin(name, symbol, totalCoin);
     await transaction.wait()
     const address = await factoryCoinContract.getLastCoinDeployed();
     const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
     return axios.post(`${baseUrl}coins`, {
         name,
-        symbol, 
+        symbol,
         address,
         owner
     })

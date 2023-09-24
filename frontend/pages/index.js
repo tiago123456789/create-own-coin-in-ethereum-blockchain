@@ -5,7 +5,7 @@ import ModalRequestCoin from "../components/ModalRequestCoin";
 import ModalCreateCoin from "../components/ModalCreateCoin";
 import ModalRequestsPendent from "../components/ModalRequestsPendent";
 import { useEffect, useState } from "react";
-import { createCoin, getCoins } from "../services/coins";
+import { getCoins } from "../services/coins";
 import useAuth from "../hooks/useAuth";
 
 function Index({ coinsCreated }) {
@@ -15,10 +15,27 @@ function Index({ coinsCreated }) {
     const [showModalRequestCoin, setShowModalRequestCoin] = useState(false);
     const [showModalRequestPendents, setShowModalRequestsPendents] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState(null)
+    const [pagination, setPagination] = useState({
+        page: 1, 
+        itemsPerPage: 10
+    })
 
     const first10Coins = async () => {
-        const newCoins = await getCoins(0, 10)
+        setPagination({
+            ...pagination,
+            page: 1
+        })
+        const newCoins = await getCoins(1, pagination.itemsPerPage)
         setCoins(newCoins)
+    }
+
+    const loadMoreCoins = () => {
+        const nextPage = (pagination.page + 1)
+        setPagination({
+            ...pagination,
+            page: nextPage
+        })
+        loadCoins(nextPage, pagination.itemsPerPage)
     }
 
     const loadCoins = async (page, itemsPerPage) => {
@@ -39,7 +56,11 @@ function Index({ coinsCreated }) {
     useEffect(() => {
         (async () => {
             await authenticateInWallet()
-            loadCoins(2, 10)
+            setPagination({
+                ...pagination,
+                page: 2
+            })
+            loadCoins(2, pagination.itemsPerPage)
         })()
     }, [])
 
@@ -58,7 +79,7 @@ function Index({ coinsCreated }) {
                 close={() => setShowModalCreateCoin(false)}
                 actionAfterCreate={() => first10Coins()}
             />
-            <ModalRequestsPendent 
+            <ModalRequestsPendent
                 ownerOfCoin={accountConnected}
                 open={showModalRequestPendents}
                 close={() => setShowModalRequestsPendents(false)}
@@ -69,8 +90,8 @@ function Index({ coinsCreated }) {
                         <Icon name="plus" /> Create your coin
                     </Button>
                 }
-                <Button 
-                    color="blue" 
+                <Button
+                    color="blue"
                     onClick={() => setShowModalRequestsPendents(true)}
                     className="right floated">
                     <Icon name="list" /> Requests pendent
@@ -89,7 +110,15 @@ function Index({ coinsCreated }) {
                             </GridColumn>
                         )
                     })}
+
                 </Grid>
+                <br/>
+                <Button primary fluid onClick={() => loadMoreCoins() }>
+                    Show more coins
+                </Button>
+                <br/>
+                <br/>
+
             </Container>
         </>
     )
@@ -97,7 +126,7 @@ function Index({ coinsCreated }) {
 
 
 export const getServerSideProps = async () => {
-    const coins =  await getCoins(1, 10)
+    const coins = await getCoins(1, 10)
     return { props: { coinsCreated: coins } }
 }
 

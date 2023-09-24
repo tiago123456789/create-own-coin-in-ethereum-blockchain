@@ -10,11 +10,13 @@ contract FactoryYourCoin {
 
     function createCoin(
         string memory name, 
-        string memory symbol
+        string memory symbol,
+        uint totalCoin
     ) public {
         YourCustomCoin newCoin = new YourCustomCoin(
             name,
             symbol,
+            totalCoin,
             msg.sender
         );
         coinsDeployed.push(address(newCoin));
@@ -31,17 +33,17 @@ contract FactoryYourCoin {
 
 contract YourCustomCoin is ERC20 {
 
-    uint private _totalSupply = 10000 * 10 ** 18;
     uint private _decimals = 18;
     address public owner;
 
     constructor( 
         string memory name, 
         string memory symbol,
+        uint totalCoin,
         address coinOwner
     ) ERC20(name, symbol) {
         owner = coinOwner;
-        _mint(owner, _totalSupply);
+        _mint(owner, (totalCoin * 10 ** 18));
     }
     
 }

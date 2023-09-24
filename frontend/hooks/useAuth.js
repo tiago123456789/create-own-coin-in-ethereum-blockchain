@@ -18,7 +18,7 @@ export default function useAuth() {
             const accounts = await web3.send("eth_requestAccounts", [])
             if (accounts.length > 0) setAccountConnected(accounts[0]);
         } catch (error) {
-            console.log(e)
+            console.log(error)
         }
     }
 

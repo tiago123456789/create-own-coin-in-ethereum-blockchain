@@ -8,7 +8,9 @@ const createRequest = async (data) => {
         requester_wallet_address: data.requesterWalletAddress,
         amount: data.amount,
         coin_contract_address: data.coinContractAddress,
-        coin_name: data.coinName
+        coin_name: data.coinName,
+        updated_at: new Date(),
+        created_at: new Date()
     })
 }
 

@@ -3,7 +3,9 @@ import { getValidationErrors } from '../utils/validator';
 import clientDB from "../configs/Database"
 
 const getRequests = async (ownerWalletAddress) => {
-    return clientDB("requests").where("owner_wallet_address", ownerWalletAddress)
+    return clientDB("requests")
+        .where("owner_wallet_address", ownerWalletAddress)
+        .orderBy("created_at", "asc")
 }
 
 export default async (request, response) => {
