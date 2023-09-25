@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Form, Grid, Modal } from "semantic-ui-react"
 import { createCoin } from "../services/coins";
+import { toast } from 'react-toastify';
+
 
 
 function ModalCreateCoin({ ownerOfCoin, open, close, actionAfterCreate }) {
@@ -14,6 +16,22 @@ function ModalCreateCoin({ ownerOfCoin, open, close, actionAfterCreate }) {
     const [isLoading, setIsLoading] = useState(false)
 
     const submitToCreateCoin = async () => {
+
+        if (newCoin.name.length === 0) {
+            toast.error("Name is required")
+            return;
+        }
+
+        if (newCoin.symbol.length === 0) {
+            toast.error("Symbol is required")
+            return;
+        }
+
+        if (!newCoin.totalAmount || parseInt(newCoin.totalAmount) <= 0) {
+            toast.error("Total amount is required")
+            return;
+        }
+
         setIsLoading(true)
         await createCoin(
             newCoin.name, newCoin.symbol, ownerOfCoin, newCoin.totalAmount

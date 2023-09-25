@@ -385,6 +385,8 @@ const COIN_ABI = [
     }
 ]
 
+const BASE_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
+
 const getSigner = () => {
     if (typeof window !== "undefined") return web3.getSigner();
     return web3;
@@ -400,8 +402,7 @@ const factoryCoinContract = new ethers.Contract(
 )
 
 export const getCoins = async (page, itemsPerPage) => {
-    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
-    const response = await axios.get(`${baseUrl}coins?page=${page}&itemsPerPage=${itemsPerPage}`)
+    const response = await axios.get(`${BASE_URL}coins?page=${page}&itemsPerPage=${itemsPerPage}`)
     return response.data.data;
 }
 
@@ -409,8 +410,7 @@ export const createCoin = async (name, symbol, owner, totalCoin) => {
     const transaction = await factoryCoinContract.createCoin(name, symbol, totalCoin);
     await transaction.wait()
     const address = await factoryCoinContract.getLastCoinDeployed();
-    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
-    return axios.post(`${baseUrl}coins`, {
+    return axios.post(`${BASE_URL}coins`, {
         name,
         symbol,
         address,
@@ -419,13 +419,11 @@ export const createCoin = async (name, symbol, owner, totalCoin) => {
 }
 
 export const requestCoin = (data) => {
-    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
-    return axios.post(`${baseUrl}requests`, data)
+    return axios.post(`${BASE_URL}requests`, data)
 }
 
 export const getRequestedCoinsByOwner = async (owner) => {
-    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
-    const response = await axios.get(`${baseUrl}requests?ownerWalletAddress=${owner}`)
+    const response = await axios.get(`${BASE_URL}requests?ownerWalletAddress=${owner}`)
     return response.data;
 }
 
@@ -436,6 +434,5 @@ export const approveRequestForCoin = async (contractAddress, recipient, amount, 
 
     const transaction = await coinContract.transfer(recipient, amount);
     await transaction.wait()
-    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
-    await axios.delete(`${baseUrl}requests/${id}`)
+    await axios.delete(`${BASE_URL}requests/${id}`)
 }

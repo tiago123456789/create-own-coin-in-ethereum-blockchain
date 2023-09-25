@@ -16,7 +16,7 @@ function Index({ coinsCreated }) {
     const [showModalRequestPendents, setShowModalRequestsPendents] = useState(false);
     const [selectedCoin, setSelectedCoin] = useState(null)
     const [pagination, setPagination] = useState({
-        page: 1, 
+        page: 1,
         itemsPerPage: 10
     })
 
@@ -85,23 +85,26 @@ function Index({ coinsCreated }) {
                 close={() => setShowModalRequestsPendents(false)}
             />
             <Container>
-                {isConnected() &&
-                    <Button color="blue" onClick={() => setShowModalCreateCoin(true)}>
-                        <Icon name="plus" /> Create your coin
+                <br/>
+                <Grid>
+                    {isConnected() &&
+                        <Button color="blue" onClick={() => setShowModalCreateCoin(true)}>
+                            <Icon name="plus" /> Create your coin
+                        </Button>
+                    }
+                    <Button
+                        color="blue"
+                        onClick={() => setShowModalRequestsPendents(true)}
+                        className="right floated">
+                        <Icon name="list" /> Requests pendent
                     </Button>
-                }
-                <Button
-                    color="blue"
-                    onClick={() => setShowModalRequestsPendents(true)}
-                    className="right floated">
-                    <Icon name="list" /> Requests pendent
-                </Button>
+                </Grid>
                 <br />
                 <br />
                 <Grid columns={4}>
                     {isConnected() && coins.map((coin, index) => {
                         return (
-                            <GridColumn key={index}>
+                            <GridColumn key={index} mobile={12} computer={4} tablet={6}>
                                 <Coin
                                     name={coin.name}
                                     symbol={coin.symbol}
@@ -112,12 +115,12 @@ function Index({ coinsCreated }) {
                     })}
 
                 </Grid>
-                <br/>
-                <Button primary fluid onClick={() => loadMoreCoins() }>
+                <br />
+                <Button primary fluid onClick={() => loadMoreCoins()}>
                     Show more coins
                 </Button>
-                <br/>
-                <br/>
+                <br />
+                <br />
 
             </Container>
         </>

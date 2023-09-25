@@ -1,5 +1,7 @@
 import 'semantic-ui-css/semantic.min.css'
 import { NextSeo } from 'next-seo';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App({ Component, pageProps }) {
   return (
@@ -24,6 +26,7 @@ function App({ Component, pageProps }) {
         ]}
       />
       <Component {...pageProps} />
+      <ToastContainer />
     </>
   )
 }

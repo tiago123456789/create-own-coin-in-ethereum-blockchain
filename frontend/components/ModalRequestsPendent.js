@@ -34,6 +34,10 @@ function ModalRequestsPendent({
         setSelectedItem(null)
     }
 
+    const isProcessingApprovation = (item) => {
+        return (isLoading && selectedItem.id == item.id )
+    }
+
     useEffect(() => {
         if (open && ownerOfCoin) {
             loadRequestsPendents(ownerOfCoin)
@@ -65,7 +69,7 @@ function ModalRequestsPendent({
                                     <Card.Content extra>
                                         {canApprove(item) &&
                                             <Button 
-                                            loading={(isLoading && selectedItem.id == item.id )}
+                                            loading={isProcessingApprovation(item)}
                                             onClick={() => approve(item)}
                                             fluid basic color='blue'>
                                                 Approve

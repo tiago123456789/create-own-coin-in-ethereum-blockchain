@@ -1,13 +1,20 @@
 import { useState } from "react"
 import { Button, Input, Modal } from "semantic-ui-react"
 import { requestCoin } from "../services/coins";
+import { toast } from 'react-toastify';
 
 function ModalRequestCoin({ accountConnected, open, close, selectedCoin }) {
     const [amount, setAmount] = useState(0);
     const [isLoading, setIsLoading] = useState(false)
 
     const requestAmountOfCoin = async () => {
-        setIsLoading(false);
+
+        if (amount == 0) {
+            toast.error("You need specify amount of value!")
+            return; 
+        }
+
+        setIsLoading(true);
         const request = {
             amount, 
             ownerWalletAddress: selectedCoin.owner,
