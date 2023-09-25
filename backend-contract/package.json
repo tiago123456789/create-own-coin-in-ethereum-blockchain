@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "npm run compile && npx hardhat run ./scripts/deploy --network sepolia",
+    "deploy": "npm run compile && npx hardhat run ./scripts/deploy.js --network sepolia",
     "compile": "npx hardhat compile",
     "test": "NODE_ENV=testing npx hardhat test"
   },

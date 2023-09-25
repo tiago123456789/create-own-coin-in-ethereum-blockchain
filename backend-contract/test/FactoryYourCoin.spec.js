@@ -30,7 +30,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -42,7 +43,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const [coinsDeployed, lastCoinDeployed] = await Promise.all([
@@ -60,12 +62,14 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -78,7 +82,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -98,7 +103,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -115,7 +121,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -123,7 +130,7 @@ describe("FactoryYourCoin contract", () => {
 
         const yourCustomCoin = await getCoinContractByAddress(contractAddress)
         const totalTokens = await yourCustomCoin.balanceOf(owner.address)
-        expect(parseInt(totalTokens)).to.equal(parseInt('10000000000000000000000'));
+        expect(parseInt(totalTokens)).to.equal(parseInt('1000000000000000000000'));
     });
 
 
@@ -133,7 +140,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -151,7 +159,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -168,7 +177,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
@@ -194,7 +204,8 @@ describe("FactoryYourCoin contract", () => {
         await contract
             .createCoin(
                 fakeData.name,
-                fakeData.symbol
+                fakeData.symbol,
+                1000
             )
 
         const coinsDeployed = await contract.getCoinsDeployed();
